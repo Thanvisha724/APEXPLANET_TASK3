@@ -1,0 +1,19 @@
+{
+  "name": "ApexPlanet Sales",
+  "dataColors": ["#0F766E", "#F59E0B", "#2563EB", "#DC2626", "#7C3AED", "#0891B2"],
+  "background": "#F8FAFC",
+  "foreground": "#0F172A",
+  "tableAccent": "#0F766E",
+  "visualStyles": {
+    "*": {
+      "*": {
+        "fontFamily": "Aptos"
+      }
+    },
+    "page": {
+      "*": {
+        "background": [{ "color": { "solid": { "color": "#F8FAFC" } } }]
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+// Create a dedicated Date table and mark it as the model's date table.
+DateTable =
+ADDCOLUMNS(
+    CALENDAR(DATE(2025, 1, 1), DATE(2026, 1, 1)),
+    "Year", YEAR([Date]),
+    "Month Number", MONTH([Date]),
+    "Month", FORMAT([Date], "MMM"),
+    "Year Month", FORMAT([Date], "YYYY-MM"),
+    "Quarter", "Q" & FORMAT([Date], "Q")
+)
+
+Total Sales = SUM(Sales[Total_Sales])
+
+Total Orders = DISTINCTCOUNT(Sales[Order_ID])
+
+Total Customers = DISTINCTCOUNT(Sales[Customer_ID])
+
+Units Sold = SUM(Sales[Quantity])
+
+Average Order Value = DIVIDE([Total Sales], [Total Orders])
+
+Average Unit Price = AVERAGE(Sales[Unit_Price])
+
+Sales per Customer = DIVIDE([Total Sales], [Total Customers])
+
+Sales Previous Period =
+CALCULATE(
+    [Total Sales],
+    DATEADD(DateTable[Date], -1, YEAR)
+)
+
+Sales YoY % =
+DIVIDE(
+    [Total Sales] - [Sales Previous Period],
+    [Sales Previous Period]
+)
+
+Top Product Sales =
+MAXX(
+    TOPN(1, ALLSELECTED(Sales[Product]), [Total Sales], DESC),
+    [Total Sales]
+)
+
+Customer Share % =
+DIVIDE(
+    [Total Sales],
+    CALCULATE([Total Sales], ALLSELECTED(Sales[Customer_ID]))
+)
